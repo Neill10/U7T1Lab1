@@ -93,12 +93,33 @@ public class UsedCarLot
      */
     public void moveCar(int indexOfCarToMove, int destinationIndex)
     {
-        if(destinationIndex > indexOfCarToMove)
-        {
-            Car movedCar = inventory.get(indexOfCarToMove);
-            
-
+        Car movedCar = inventory.get(indexOfCarToMove);
+        if(indexOfCarToMove < destinationIndex) {
+            for (int i = indexOfCarToMove + 1; i < destinationIndex; i++) {
+                inventory.remove(indexOfCarToMove);
+                inventory.add(destinationIndex, movedCar);
+            }
         }
+        else
+        {
+            Car at = inventory.get(destinationIndex);
+            inventory.remove(indexOfCarToMove);
+            inventory.remove(destinationIndex);
+            for(int x = 0; x < inventory.size();x++)
+            {
+                if (x == 0) {
+                    Car shift = inventory.get(x);
+                    inventory.add(shift);
+                    inventory.remove(x);
+                }
+            }
+            inventory.add(destinationIndex,at);
+            inventory.add(destinationIndex,movedCar);
+        }
+        //TEST #7 -- *****FAIL*****
+        // Expected: [Mustang 12500mi, Accent 1980mi, Cruiser 10500mi, Ram 17200mi, Camry 8400mi]
+        //   Actual: [Accent 1980mi, Camry 8400mi, Cruiser 10500mi, Ram 17200mi, Mustang 12500mi]
+
     }
 
 }
